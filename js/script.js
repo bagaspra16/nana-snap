@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Elemen utama
   const hamburger = document.getElementById('hamburger');
   const dropdown = document.getElementById('dropdown');
   const startButton = document.getElementById('startButton');
@@ -19,8 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const downloadButton = document.getElementById('downloadButton');
   const shareButton = document.getElementById('shareButton');
   const printButton = document.getElementById('printButton');
-  
-  // New elements
   const validationModal = document.getElementById('validationModal');
   const confirmYesButton = document.getElementById('confirmYesButton');
   const confirmNoButton = document.getElementById('confirmNoButton');
@@ -29,51 +26,39 @@ document.addEventListener('DOMContentLoaded', function() {
   const finalDownloadButton = document.getElementById('finalDownloadButton');
   const finalShareButton = document.getElementById('finalShareButton');
   const startOverButton = document.getElementById('startOverButton');
-  
-  // Modal untuk hamburger menu
   const howToModal = document.getElementById('howToModal');
   const supportModal = document.getElementById('supportModal');
   const howToLink = document.getElementById('howToLink');
   const supportLink = document.getElementById('supportLink');
-  
-  // Tombol filter & border
   const filterButtons = document.querySelectorAll('.filter-btn');
   const borderButtons = document.querySelectorAll('.border-btn');
 
-  // Add this to your script.js file, after the DOMContentLoaded event listener
-
-// Initialize leaf positions
 function setupLeaves(container) {
   const leaves = container.querySelectorAll('i');
   const containerWidth = window.innerWidth;
   const containerHeight = window.innerHeight;
   
   leaves.forEach((leaf, index) => {
-    // Calculate random positions
+  
     const randomLeft = Math.floor(Math.random() * containerWidth);
     const randomTop = Math.floor(Math.random() * -300) - 100; // Start above viewport
     
-    // Set random animation duration between 5 and 8 seconds
     const randomDuration = Math.random() * 3 + 5;
     
-    // Apply styles
     leaf.style.left = `${randomLeft}px`;
     leaf.style.top = `${randomTop}px`;
     leaf.style.animationDuration = `${randomDuration}s`;
     
-    // Add slight delay based on index
     leaf.style.animationDelay = `${index * 0.2}s`;
   });
 }
 
-// Show/hide leaves for different sections
 function toggleLeaves() {
   const landingSection = document.getElementById('landing');
   const resultsSection = document.getElementById('resultsSection');
   const leaves = document.getElementById('leaves');
   const resultsLeaves = document.getElementById('results-leaves');
   
-  // Check if sections are visible
   if (!landingSection.classList.contains('hidden')) {
     leaves.classList.remove('hidden');
     setupLeaves(leaves);
@@ -89,7 +74,6 @@ function toggleLeaves() {
   }
 }
 
-// Call toggleLeaves initially and whenever sections change
 window.addEventListener('resize', () => {
   const leaves = document.getElementById('leaves');
   const resultsLeaves = document.getElementById('results-leaves');
@@ -103,37 +87,31 @@ window.addEventListener('resize', () => {
   }
 });
 
-// Add leaf toggle to navigation flow
 function addLeafTogglesToButtons() {
-  // Start button
+
   const startButton = document.getElementById('startButton');
   startButton.addEventListener('click', toggleLeaves);
   
-  // Photo count buttons
   const photoCountButtons = document.querySelectorAll('.photo-count-btn');
   photoCountButtons.forEach(button => {
     button.addEventListener('click', toggleLeaves);
   });
   
-  // Done and confirmation buttons
   const doneButton = document.getElementById('doneButton');
   const confirmYesButton = document.getElementById('confirmYesButton');
   confirmYesButton.addEventListener('click', toggleLeaves);
   
-  // Start over button
   const startOverButton = document.getElementById('startOverButton');
   startOverButton.addEventListener('click', toggleLeaves);
 }
 
-// Initialize
 document.addEventListener('DOMContentLoaded', function() {
   setupLeaves(document.getElementById('leaves'));
   addLeafTogglesToButtons();
   toggleLeaves();
   
-  // Special handling for mobile devices
   if (window.innerWidth <= 768) {
-    // Reduce number of leaves on mobile
+  
     const leaves = document.querySelectorAll('#leaves i, #results-leaves i');
     for (let i = 0; i < Math.floor(leaves.length / 2); i++) {
       leaves[i].remove();
@@ -144,7 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
   let selectedPhotoCount = 1;
   let capturedPhotos = [];
   
-  // Fungsi untuk menutup modal ketika klik ikon close
   function setupModalClose(modal) {
     const closeIcons = modal.querySelectorAll('.modal-close');
     closeIcons.forEach(icon => {
@@ -157,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Set z-index tinggi untuk semua modal agar selalu berada di depan
   function setupModalZIndex() {
     const allModals = [photoCountModal, howToModal, supportModal, doneOptionsModal, validationModal];
     allModals.forEach(modal => {
@@ -167,24 +143,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Panggil fungsi untuk setup z-index modal
   setupModalZIndex();
   
   [photoCountModal, howToModal, supportModal, doneOptionsModal, validationModal].forEach(setupModalClose);
   
-  // Toggle dropdown hamburger
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('open');
     dropdown.classList.toggle('hidden');
   });
   
-  // Buka modal pemilihan jumlah foto
   startButton.addEventListener('click', () => {
     photoCountModal.classList.remove('hidden');
     landing.classList.add('blur');
   });
   
-  // Pilih jumlah foto
   photoCountButtons.forEach(button => {
     button.addEventListener('click', () => {
       selectedPhotoCount = parseInt(button.getAttribute('data-count'));
@@ -196,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Buka modal How To Use dan Support
   howToLink.addEventListener('click', (e) => {
     e.preventDefault();
     howToModal.classList.remove('hidden');
@@ -210,7 +181,6 @@ document.addEventListener('DOMContentLoaded', function() {
     hamburger.classList.remove('open');
   });
   
-  // Mulai kamera
   function startCamera() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
@@ -225,7 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // Countdown dengan animasi flash
   function countdown(seconds) {
     return new Promise(resolve => {
       let counter = seconds;
@@ -249,7 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Capture event: tombol capture hilang setelah ditekan
   captureButton.addEventListener('click', async () => {
     captureButton.style.display = 'none';
     captureButton.disabled = true;
@@ -265,7 +233,6 @@ document.addEventListener('DOMContentLoaded', function() {
     captureSection.classList.add('hidden');
     gallerySection.classList.remove('hidden');
     
-    // Set composite container class based on photo count
     compositeContainer.className = 'composite-container';
     if (selectedPhotoCount === 1) {
       compositeContainer.classList.add('composite-single');
@@ -278,7 +245,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(initializeGallery, 100);
   });
   
-  // Tangkap foto dari video
   function capturePhoto() {
     const context = canvas.getContext('2d');
     canvas.width = video.videoWidth;
@@ -287,7 +253,6 @@ document.addEventListener('DOMContentLoaded', function() {
     return canvas.toDataURL('image/png');
   }
   
-  // Inisialisasi layout composite
   function initializeGallery() {
     compositeContainer.innerHTML = '';
     const containerWidth = compositeContainer.clientWidth;
@@ -346,7 +311,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Drag & Drop dengan swap
   function makeDraggable(el) {
     let startX = 0, startY = 0;
     let origX = 0, origY = 0;
@@ -437,7 +401,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { passive: false });
   }
   
-  // Filter controls
   filterButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const filter = btn.getAttribute('data-filter');
@@ -452,7 +415,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Border controls
   borderButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const borderClass = 'border-' + btn.getAttribute('data-border');
@@ -464,20 +426,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Done button - show validation modal
   doneButton.addEventListener('click', () => {
     validationModal.classList.remove('hidden');
   });
   
-  // Validation modal responses
   confirmYesButton.addEventListener('click', () => {
     validationModal.classList.add('hidden');
     gallerySection.classList.add('hidden');
     
-    // Create final composite
     createFinalComposite();
     
-    // Show results section
     resultsSection.classList.remove('hidden');
     resultsSection.classList.add('section-transition');
   });
@@ -486,18 +444,14 @@ document.addEventListener('DOMContentLoaded', function() {
     validationModal.classList.add('hidden');
   });
   
-  // Create the final composite that can't be edited
   function createFinalComposite() {
-    // Clone the composite container and its contents
+  
     finalCompositeContainer.innerHTML = '';
     
-    // Set the same class as the original container
     finalCompositeContainer.className = compositeContainer.className;
     
-    // Get all images from the original container
     const imgs = compositeContainer.querySelectorAll('img');
     
-    // Clone each image with its current position, size, and styling
     imgs.forEach(img => {
       const clonedImg = document.createElement('img');
       clonedImg.src = img.src;
@@ -509,7 +463,6 @@ document.addEventListener('DOMContentLoaded', function() {
       clonedImg.style.height = img.style.height;
       clonedImg.style.filter = img.style.filter;
       
-      // Copy classes for borders
       img.classList.forEach(cls => {
         if (cls.startsWith('border-')) {
           clonedImg.classList.add(cls);
@@ -520,54 +473,46 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Fungsi download yang lebih cepat dengan Canvas API  
   function fastDownload(container, filename) {
-    // Buat canvas baru sesuai ukuran container
+
     const tempCanvas = document.createElement('canvas');
     const containerRect = container.getBoundingClientRect();
     tempCanvas.width = containerRect.width;
     tempCanvas.height = containerRect.height;
     const ctx = tempCanvas.getContext('2d');
     
-    // Isi background
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
     
-    // Ambil semua gambar dari container
     const images = container.querySelectorAll('img');
     
-    // Buat promise array untuk memastikan semua gambar dimuat
     const imagePromises = Array.from(images).map(img => {
       return new Promise(resolve => {
         const imgObj = new Image();
         imgObj.crossOrigin = 'Anonymous';
         imgObj.onload = () => {
-          // Dapatkan informasi posisi gambar relatif terhadap container
+  
           const imgRect = img.getBoundingClientRect();
           const offsetLeft = imgRect.left - containerRect.left;
           const offsetTop = imgRect.top - containerRect.top;
           
-          // Buat canvas sementara untuk mengaplikasikan filter
           const tempImgCanvas = document.createElement('canvas');
           tempImgCanvas.width = imgRect.width;
           tempImgCanvas.height = imgRect.height;
           const tempCtx = tempImgCanvas.getContext('2d');
           
-          // Gambar ke canvas sementara
           tempCtx.drawImage(imgObj, 0, 0, imgRect.width, imgRect.height);
           
-          // Terapkan filter CSS seperti yang ditetapkan pada gambar asli
           if (img.style.filter && img.style.filter !== 'none') {
             tempCtx.filter = img.style.filter;
             tempCtx.drawImage(tempImgCanvas, 0, 0);
             tempCtx.filter = 'none';
           }
           
-          // Buat efek border
           if (img.className.includes('border-')) {
-            const borderWidth = 10; // Sesuai dengan CSS
+            const borderWidth = 10; 
             
-            // Tentukan warna border berdasarkan kelas
+          
             let borderColor = '#000';
             if (img.classList.contains('border-romantic')) borderColor = 'pink';
             else if (img.classList.contains('border-horror')) borderColor = '#8b0000';
@@ -576,14 +521,12 @@ document.addEventListener('DOMContentLoaded', function() {
             else if (img.classList.contains('border-modern')) borderColor = '#ffffff';
             else if (img.classList.contains('border-artistic')) borderColor = '#ff4500';
             
-            // Gambar border pada canvas utama
             ctx.strokeStyle = borderColor;
             ctx.lineWidth = borderWidth;
             ctx.strokeRect(offsetLeft - borderWidth/2, offsetTop - borderWidth/2, 
                           imgRect.width + borderWidth, imgRect.height + borderWidth);
           }
           
-          // Gambar hasil akhir ke canvas utama
           ctx.drawImage(tempImgCanvas, offsetLeft, offsetTop, imgRect.width, imgRect.height);
           resolve();
         };
@@ -591,7 +534,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     
-    // Tunggu semua gambar diproses lalu download
     Promise.all(imagePromises).then(() => {
       const dataURL = tempCanvas.toDataURL('image/jpeg', 0.95);
       const a = document.createElement('a');
@@ -604,15 +546,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Download final composite dengan metode baru
   finalDownloadButton.addEventListener('click', () => {
     fastDownload(finalCompositeContainer, 'nana-snap-photo.jpg');
   });
   
-  // Share final composite
   finalShareButton.addEventListener('click', () => {
     if (navigator.share) {
-      // Konversi composite ke blob dulu untuk sharing
       const tempCanvas = document.createElement('canvas');
       const containerRect = finalCompositeContainer.getBoundingClientRect();
       tempCanvas.width = containerRect.width;
@@ -626,7 +565,6 @@ document.addEventListener('DOMContentLoaded', function() {
             text: 'Cek hasil photobooth aku dari Nana Snap!',
             files: files
           }).catch(err => {
-            // Fallback jika sharing file gagal
             navigator.share({
               title: 'Nana Snap Photo',
               text: 'Cek hasil photobooth aku dari Nana Snap!',
@@ -640,38 +578,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Start over button
   startOverButton.addEventListener('click', () => {
-    // Stop camera if running
     if (video.srcObject) {
       const tracks = video.srcObject.getTracks();
       tracks.forEach(track => track.stop());
       video.srcObject = null;
     }
     
-    // Reset UI
     resultsSection.classList.add('hidden');
     captureSection.classList.add('hidden');
     gallerySection.classList.add('hidden');
     landing.classList.remove('hidden');
     
-    // Show capture button again
     captureButton.style.display = 'flex';
     captureButton.disabled = false;
     
-    // Clear captured photos
     capturedPhotos = [];
   });
   
-  // Download button dalam doneOptionsModal juga menggunakan metode lebih cepat
   downloadButton.addEventListener('click', () => {
     fastDownload(compositeContainer, 'nana-snap-photo.jpg');
   });
   
-  // Share (Web Share API)
   shareButton.addEventListener('click', () => {
     if (navigator.share) {
-      // Konversi composite ke blob dulu untuk sharing
       html2canvas(compositeContainer).then(canvas => {
         canvas.toBlob(blob => {
           const files = [new File([blob], 'nana-snap-photo.jpg', { type: 'image/jpeg' })];
@@ -680,7 +610,6 @@ document.addEventListener('DOMContentLoaded', function() {
             text: 'Cek hasil photobooth aku dari Nana Snap!',
             files: files
           }).catch(err => {
-            // Fallback jika sharing file gagal
             navigator.share({
               title: 'Nana Snap Photo',
               text: 'Cek hasil photobooth aku dari Nana Snap!',
@@ -694,7 +623,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Print
   printButton.addEventListener('click', () => {
     window.print();
   });
